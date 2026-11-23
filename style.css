@@ -190,6 +190,68 @@ main {
   font-weight: 600;
 }
 
+/* ===== Filtry i kategorie ===== */
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+/* Wspólny wygląd list rozwijanych (select) */
+select {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px;
+  padding: 11px 32px 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: var(--text);
+  -webkit-appearance: none;
+  appearance: none;
+  /* strzałka w dół narysowana jako obrazek SVG */
+  background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center;
+  text-overflow: ellipsis;
+}
+.form select { font-size: 17px; padding-top: 14px; padding-bottom: 14px; }
+.filters select.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.form-row {
+  display: grid;
+  /* minmax(0, 1fr) = dwie równe kolumny, nawet gdy pole "chce" być szersze */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+.form-row > label { min-width: 0; }
+.form-row input { width: 100%; min-width: 0; }
+
+/* Małe "plakietki" z częścią mowy i kategorią */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.tags:empty { display: none; }
+.tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.tag.topic { color: var(--primary); }
+.word-text .tags {
+  justify-content: flex-start;
+  margin-top: 6px;
+}
+
 /* ===== Import CSV ===== */
 .import {
   margin-top: 32px;
@@ -281,6 +343,80 @@ label.btn {
 .search-bar input:focus {
   outline: 2px solid var(--primary);
   border-color: transparent;
+}
+
+/* ===== Przełącznik Wszystkie / Foldery ===== */
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 10px;
+  padding: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.segmented button {
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 9px;
+  border-radius: 10px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.segmented button.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ===== Foldery ===== */
+.folder-item {
+  cursor: pointer;
+}
+.folder-item:active { opacity: 0.7; }
+.folder-icon { font-size: 28px; }
+.folder-count {
+  color: var(--muted);
+  font-size: 14px;
+}
+.chevron {
+  color: var(--muted);
+  font-size: 22px;
+}
+.folder-item.no-topic .word-en { color: var(--muted); font-style: italic; }
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.folder-header h2 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.back-btn {
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--primary);
+  padding: 6px 0;
+  cursor: pointer;
+}
+.btn.small {
+  width: auto;
+  min-height: 38px;
+  padding: 0 16px;
+  font-size: 15px;
 }
 
 /* ===== Edycja słówka ===== */

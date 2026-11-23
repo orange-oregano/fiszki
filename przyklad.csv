@@ -1,5 +1,8 @@
-english;polish;example
-apple;jabłko;I eat an apple every day.
-brave;odważny;"Be brave, my friend."
-to borrow;pożyczać (od kogoś);Can I borrow your pen?
-although;chociaż
+english;polish;example;part of speech;category
+apple;jabłko;I eat an apple every day.;rzeczownik;jedzenie
+brave;odważny;"Be brave, my friend.";przymiotnik;emocje
+to borrow;pożyczać (od kogoś);Can I borrow your pen?;czasownik;szkoła
+although;chociaż;;inne;
+kitchen;kuchnia;We cook in the kitchen.;rzeczownik;dom
+to clean;sprzątać;I clean my room on Saturdays.;czasownik;dom
+homework;praca domowa;I forgot my homework.;rzeczownik;szkoła

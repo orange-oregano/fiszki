@@ -29,6 +29,12 @@
   <main>
     <!-- EKRAN 1: nauka z fiszkami -->
     <section id="screen-learn" class="screen active">
+      <!-- Filtry: ucz się tylko wybranej części mowy / kategorii -->
+      <div id="filters" class="filters">
+        <select id="filter-pos" aria-label="Część mowy"></select>
+        <select id="filter-topic" aria-label="Kategoria"></select>
+      </div>
+
       <p id="stats" class="stats"></p>
 
       <div id="empty-learn" class="empty hidden">
@@ -36,9 +42,12 @@
         <button class="btn primary" data-goto="add">Dodaj pierwsze słówko</button>
       </div>
 
+      <p id="empty-filter" class="empty hidden">Brak słówek dla wybranych filtrów.</p>
+
       <div id="learn-area">
         <!-- Karta: stuknięcie odwraca ją na drugą stronę -->
         <button id="card" class="card" aria-label="Odwróć fiszkę">
+          <span id="card-tags" class="tags"></span>
           <span id="card-word" class="card-word"></span>
           <span id="card-answer" class="card-answer hidden">
             <span id="card-translation" class="card-translation"></span>
@@ -69,6 +78,19 @@
           <span>Przykładowe zdanie <span class="optional">(opcjonalnie)</span></span>
           <textarea id="input-example" rows="2" placeholder="np. I eat an apple every day."></textarea>
         </label>
+        <div class="form-row">
+          <label>
+            Część mowy
+            <select id="input-pos"></select>
+          </label>
+          <label>
+            Kategoria
+            <input id="input-topic" type="text" list="topic-suggestions"
+                   autocapitalize="none" placeholder="np. dom">
+          </label>
+        </div>
+        <!-- Podpowiedzi kategorii (wypełniane przez app.js) -->
+        <datalist id="topic-suggestions"></datalist>
         <button type="submit" class="btn primary">Dodaj słówko</button>
         <p id="add-message" class="message" role="status"></p>
       </form>
@@ -77,10 +99,15 @@
       <div class="import">
         <h2>Import z pliku CSV</h2>
         <p class="import-help">
-          Każda linia to jedno słówko: <b>angielskie, polskie, zdanie</b>
-          (zdanie jest opcjonalne). Separatorem może być przecinek lub średnik.
+          Każda linia to jedno słówko:
+          <b>angielskie; polskie; zdanie; część mowy; kategoria</b>.
+          Trzy ostatnie są opcjonalne (zostaw puste miejsce, np. <b>;;</b>).
+          Separatorem może być przecinek lub średnik.
+          Jeśli pierwsza linia to nagłówek (np. <b>angielski;polski;kategoria</b>),
+          kolumny mogą być w dowolnej kolejności.
         </p>
-        <pre class="import-example">apple;jabłko;I eat an apple every day.
+        <pre class="import-example">apple;jabłko;I eat an apple every day.;rzeczownik;jedzenie
+to learn;uczyć się;;czasownik;szkoła
 brave;odważny</pre>
         <label class="btn secondary" for="input-csv">Wybierz plik .csv</label>
         <input id="input-csv" type="file" accept=".csv,text/csv,text/plain" hidden>
@@ -93,7 +120,20 @@ brave;odważny</pre>
       <div class="search-bar">
         <input id="search" type="search" placeholder="🔍 Szukaj słówka…"
                autocomplete="off" autocapitalize="none" aria-label="Szukaj słówka">
+        <!-- Przełącznik: zwykła lista albo foldery (kategorie) -->
+        <div id="view-switch" class="segmented" role="tablist">
+          <button data-view="all" class="active">Wszystkie</button>
+          <button data-view="folders">📁 Foldery</button>
+        </div>
       </div>
+
+      <!-- Nagłówek otwartego folderu -->
+      <div id="folder-header" class="folder-header hidden">
+        <button id="folder-back" class="back-btn">‹ Foldery</button>
+        <h2 id="folder-title"></h2>
+        <button id="folder-learn" class="btn primary small">Ucz się</button>
+      </div>
+
       <p id="list-empty" class="empty hidden">Lista jest pusta.</p>
       <ul id="word-list" class="word-list"></ul>
     </section>

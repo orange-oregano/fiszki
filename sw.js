@@ -2,7 +2,7 @@
 // dzięki czemu Fiszki działają także bez internetu.
 
 // Zmień numer wersji po każdej zmianie w plikach, żeby telefon pobrał nowe.
-const CACHE = 'fiszki-v3';
+const CACHE = 'fiszki-v4';
 
 const FILES = [
   './',
