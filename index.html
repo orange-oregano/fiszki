@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport-fit=cover: aplikacja zajmuje cały ekran iPhone'a, także obok "notcha" -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Fiszki</title>
+
+  <!-- PWA: plik z opisem aplikacji (nazwa, ikona, kolory) -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4f46e5">
+
+  <!-- Ustawienia specjalnie dla iPhone'a (Safari) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Fiszki">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="top">
+    <h1 id="screen-title">Ucz się</h1>
+  </header>
+
+  <main>
+    <!-- EKRAN 1: nauka z fiszkami -->
+    <section id="screen-learn" class="screen active">
+      <p id="stats" class="stats"></p>
+
+      <div id="empty-learn" class="empty hidden">
+        <p>Nie masz jeszcze żadnych słówek.</p>
+        <button class="btn primary" data-goto="add">Dodaj pierwsze słówko</button>
+      </div>
+
+      <div id="learn-area">
+        <!-- Karta: stuknięcie odwraca ją na drugą stronę -->
+        <button id="card" class="card" aria-label="Odwróć fiszkę">
+          <span id="card-word" class="card-word"></span>
+          <span id="card-answer" class="card-answer hidden">
+            <span id="card-translation" class="card-translation"></span>
+            <span id="card-example" class="card-example"></span>
+          </span>
+          <span id="card-hint" class="card-hint">Stuknij, aby zobaczyć tłumaczenie</span>
+        </button>
+
+        <div id="answer-buttons" class="answer-buttons hidden">
+          <button id="btn-dont-know" class="btn danger">Nie umiem</button>
+          <button id="btn-know" class="btn success">Umiem</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- EKRAN 2: dodawanie słówka -->
+    <section id="screen-add" class="screen">
+      <form id="add-form" class="form" autocomplete="off">
+        <label>
+          Słówko po angielsku
+          <input id="input-en" type="text" required autocapitalize="none" placeholder="np. apple">
+        </label>
+        <label>
+          Tłumaczenie po polsku
+          <input id="input-pl" type="text" required autocapitalize="none" placeholder="np. jabłko">
+        </label>
+        <label>
+          <span>Przykładowe zdanie <span class="optional">(opcjonalnie)</span></span>
+          <textarea id="input-example" rows="2" placeholder="np. I eat an apple every day."></textarea>
+        </label>
+        <button type="submit" class="btn primary">Dodaj słówko</button>
+        <p id="add-message" class="message" role="status"></p>
+      </form>
+
+      <!-- Import wielu słówek naraz z pliku CSV -->
+      <div class="import">
+        <h2>Import z pliku CSV</h2>
+        <p class="import-help">
+          Każda linia to jedno słówko: <b>angielskie, polskie, zdanie</b>
+          (zdanie jest opcjonalne). Separatorem może być przecinek lub średnik.
+        </p>
+        <pre class="import-example">apple;jabłko;I eat an apple every day.
+brave;odważny</pre>
+        <label class="btn secondary" for="input-csv">Wybierz plik .csv</label>
+        <input id="input-csv" type="file" accept=".csv,text/csv,text/plain" hidden>
+        <p id="import-message" class="message" role="status"></p>
+      </div>
+    </section>
+
+    <!-- EKRAN 3: lista wszystkich słówek -->
+    <section id="screen-list" class="screen">
+      <div class="search-bar">
+        <input id="search" type="search" placeholder="🔍 Szukaj słówka…"
+               autocomplete="off" autocapitalize="none" aria-label="Szukaj słówka">
+      </div>
+      <p id="list-empty" class="empty hidden">Lista jest pusta.</p>
+      <ul id="word-list" class="word-list"></ul>
+    </section>
+  </main>
+
+  <!-- Dolny pasek z zakładkami -->
+  <nav class="tabs">
+    <button class="tab active" data-goto="learn"><span class="tab-icon">🃏</span>Ucz się</button>
+    <button class="tab" data-goto="add"><span class="tab-icon">➕</span>Dodaj</button>
+    <button class="tab" data-goto="list"><span class="tab-icon">📋</span>Lista</button>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>
